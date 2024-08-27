@@ -11,8 +11,8 @@ async def main():
     scheduler = AsyncIOScheduler()
 
     timezone = pytz.timezone('Europe/Moscow')
+    scheduler.add_job(send_course, CronTrigger(hour=6, minute=0, timezone=timezone))
     scheduler.add_job(send_course, CronTrigger(hour=12, minute=0, timezone=timezone))
-    scheduler.add_job(send_course, CronTrigger(hour=16, minute=0, timezone=timezone))
 
     scheduler.start()
     await dp.start_polling(bot)

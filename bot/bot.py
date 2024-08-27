@@ -44,7 +44,6 @@ def add_back_button(keyboard):
     return keyboard
 
 
-
 @dp.message(Command("start"))
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
@@ -54,13 +53,19 @@ async def start(message: types.Message):
     await message.answer("<b>👋 Приветствую </b>", reply_markup=keyboard)
 
 
+@dp.callback_query(lambda c: c.data == "back_button")
+async def back_handler(callback_query: types.CallbackQuery):
+    await start(callback_query.message)
+    return
+
+
 @dp.callback_query(lambda c: c.data == "get_course")
-async def start_calculation(callback_query: types.CallbackQuery):
+async def start_course(callback_query: types.CallbackQuery):
     course = await parse_atb_bank()
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🔙 В главное меню", callback_data="back_to_start")],
+        [InlineKeyboardButton(text="🔙 В главное меню", callback_data="back_button")],
     ])
-    await callback_query.message.answer(course, keyboard=keyboard)
+    await callback_query.message.answer(course, reply_markup=keyboard)
 
 
 @dp.callback_query(lambda c: c.data == "calculation_start")
