@@ -1,9 +1,10 @@
 import aiohttp
-import requests
+from aiocache import cached
 from bs4 import BeautifulSoup
 from bot.config import URL_COURSES
 
 
+@cached(ttl=600)
 async def parse_atb_bank():
     result = ''
     try:
