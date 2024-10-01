@@ -6,12 +6,14 @@ from apscheduler.triggers.cron import CronTrigger
 from bot.bot import dp, bot
 from bot.handlers import *
 from services.course_service import schedule_send_course
+from utils.get_course import test_proxy_connection
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 async def main():
+    await test_proxy_connection()
     scheduler = AsyncIOScheduler()
 
     timezone = pytz.timezone('Europe/Moscow')
