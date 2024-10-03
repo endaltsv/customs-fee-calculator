@@ -16,6 +16,8 @@ async def main():
     await test_proxy_connection()
     scheduler = AsyncIOScheduler()
 
+    await schedule_send_course()
+
     timezone = pytz.timezone('Europe/Moscow')
     scheduler.add_job(schedule_send_course, CronTrigger(hour=6, minute=0, timezone=timezone))
     scheduler.add_job(schedule_send_course, CronTrigger(hour=12, minute=0, timezone=timezone))
